@@ -13,10 +13,8 @@ for ($i=0;$i<$dataLen &&count($results) <10;$i++){
 }
 
 echo implode('|', $results);
-?>
 
-
-to get JSON as your dataset, 
+/*to get JSON as your dataset, 
 
 $string = file_get_contents("/home/Hamdy/test.json");
 
@@ -29,4 +27,7 @@ $json = json_decode($string, true);
 we have the array, you can access the values we need. print the content of the array print_r($json, true)
 
 
-select your data using a sql query and store them in an array like we did
+select your data using a sql query and store them in an array like we did */
+?>
+
+
