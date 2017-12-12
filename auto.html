@@ -1,47 +1,79 @@
 
-<!DOCTYPE html>
 
 <html>
 
 	<head>
-		<meta charset = "utf-8"/>
 		<!--<link rel="stylesheet" href ="style.css"/> -->
 		<title> Autocomplete system in Google Cloud</title>
+
+				<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
 		<!-- JS file -->
-		<script src="autocomplete/jquery.easy-autocomplete.min.js"></script> 
+		<script src="/autocomplete/jquery.easy-autocomplete.min.js"></script> 
+
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 
 		<!-- CSS file -->		
-		<link rel="stylesheet" href="autocomplete/easy-autocomplete.min.css"> 
+		<link rel="stylesheet" href="/autocomplete/easy-autocomplete.min.css"> 
 
 		<!-- Additional CSS Themes file - not required-->
-		<link rel="stylesheet" href="autocomplete/easy-autocomplete.themes.min.css"> 
+		<link rel="stylesheet" href="/autocomplete/easy-autocomplete.themes.min.css"> 
 
-		<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
 
 	</head>
 
 	<body>
-		<input id="search" type = "text" autocomplete="off"/>
-		<div id="results"></div>
+		<input id="search" />
 		<script >
-			
-			var options = {
-	url: "https://raw.githubusercontent.com/BestBuyAPIs/open-data-set/master/products.json",
 
-	theme:"dark",
-
-	getValue: function(element) {
-	return element.name;
-},
-
-	list: {
-		match: {
-			enabled: true
+			$( function() {
+	$.getJSON("https://storage.googleapis.com/productsauto/products.json", function(data) {
+		autoComplete = [];
+		for (var i = 0, len = data.length; i < len; i++) {
+			autoComplete.push(data[i].name + ", " + data[i].iata);
 		}
-	}
-};
+		$( "#search" ).autocomplete({
+			source: function(request, response) {
+        var results = $.ui.autocomplete.filter(autoComplete, request.term);
 
-$("#search").easyAutocomplete(options);
+        response(results.slice(0, 10));
+
+    },
+			minLength : 3
+		});
+	});
+});
+			
+			//var options = {
+	//url: "products.json",
+
+
+
+	//listLocation: "sku",
+
+
+	//getValue: function(element) {
+	//return element.name;
+//},
+
+  //ajaxSettings: {
+    //  dataType: "jsonp"
+  //}, Access-Control-Allow-Origin: *
+
+
+	//theme:"dark",
+
+
+	//list: {
+	//	match: {
+	//		enabled: true
+	//	}
+	//}
+//};
+
+//$("#search").easyAutocomplete(options);
 		</script>
 	</body>
 </html>
